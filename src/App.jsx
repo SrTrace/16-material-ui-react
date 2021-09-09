@@ -1,7 +1,6 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import {Person} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/core/styles";
+import Navbar from "./components/Navbar";
 
 const useStyles = makeStyles(theme => ({
 
@@ -12,7 +11,7 @@ const App = () => {
 
   return (
       <div>
-
+        <Navbar/>
       </div>
   );
 };
