@@ -1,6 +1,5 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -8,14 +7,12 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Rightbar = () => {
+const Post = () => {
     const classes = useStyles();
 
     return (
-        <Container className={classes.container}>
-            RightBar
-        </Container>
+        <div>hello</div>
     );
 };
 
-export default Rightbar;
+export default Post;
