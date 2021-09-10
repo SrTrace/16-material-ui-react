@@ -11,7 +11,7 @@ import Badge from "@material-ui/core/Badge";
 import Avatar from "@material-ui/core/Avatar";
 import CancelIcon from "@material-ui/icons/Cancel";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     toolbar: {
         display: "flex",
         justifyContent: "space-between"
@@ -41,12 +41,17 @@ const useStyles = makeStyles(theme => ({
             display: (props) => (props.open ? "flex" : "none"),
             width: "70%",
         },
+        [theme.breakpoints.up("sm")]: {
+            display: (props) => (props.open ? "none" : "flex"),
+        },
     },
     input: {
+        flexGrow: "2",
         color: "white",
         marginLeft:  theme.spacing(1)
     },
     cancel: {
+        marginRight:  theme.spacing(1),
         [theme.breakpoints.up("sm")]: {
             display: "none",
         },
