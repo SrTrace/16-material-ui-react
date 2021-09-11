@@ -1,14 +1,45 @@
 import React, {useState} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
+import Container from '@material-ui/core/Container';
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
+import Modal from "@material-ui/core/Modal";
+import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Radio from "@material-ui/core/Radio";
+import FormLabel from "@material-ui/core/FormLabel";
+import Button from "@material-ui/core/Button";
+
 
 const useStyles = makeStyles(theme => ({
     fab: {
         position: 'fixed',
         bottom: 20,
         right: 20,
+    },
+    container: {
+        width: 500,
+        height: 550,
+        backgroundColor: "white",
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        margin: "auto",
+        [theme.breakpoints.down("sm")]: {
+            width: "100vw",
+            height:  "100vh",
+        },
+    },
+    form: {
+      padding: theme.spacing(2),
+    },
+    item: {
+      marginBottom: theme.spacing(3),
     },
 }));
 
@@ -17,7 +48,7 @@ const Add = () => {
     const [open,setOpen] = useState(false);
 
     return (
-        <div>
+        <>
             <Tooltip title="Add"
                      aria-label="add"
                      onClick={() => setOpen(true)}
@@ -26,7 +57,67 @@ const Add = () => {
                     <AddIcon />
                 </Fab>
             </Tooltip>
-        </div>
+            <Modal open={open}>
+                <Container className={classes.container}>
+                    <form className={classes.form} autoComplete="off">
+                        <div className={classes.item}>
+                            <TextField
+                                id="standart-basic"
+                                label="Title"
+                                size="small"
+                                style={{width:"100%"}}
+                            />
+                            <TextField
+                                id="outlined-multiline-static"
+                                multiline
+                                rows={4}
+                                defaultValue="Tell Your Story..."
+                                variant="outlined"
+                                label="Description"
+                                size="small"
+                                style={{width:"100%"}}
+                            />
+                        </div>
+                        <div className={classes.item}>
+                            <TextField select label="Visibility" value="Public">
+                                <MenuItem  value="Public">
+                                    Public
+                                </MenuItem>
+                                <MenuItem value="Private">
+                                    Private
+                                </MenuItem>
+                                <MenuItem value="Unlisted">
+                                    Unlisted
+                                </MenuItem>
+                            </TextField>
+                        </div>
+                        <div className={classes.item}>
+                            <FormLabel component="legend">Who can comment?</FormLabel>
+                            <RadioGroup >
+                                <FormControlLabel value="Everybody" control={<Radio size="small"/>} label="Everybody" />
+                                <FormControlLabel value="My friends" control={<Radio size="small"/>} label="My friends" />
+                                <FormControlLabel value="Nobody" control={<Radio size="small"/>} label="Nobody" />
+                                <FormControlLabel value="Custom" disabled control={<Radio size="small" />} label="Custom(Premium)" />
+                            </RadioGroup >
+                        </div>
+                        <div className={classes.item}>
+                            <Button variant="outlined"
+                                    color="primary"
+                                    style={{marginRight:"20px"}}
+                            >
+                                Create
+                            </Button>
+                            <Button variant="outlined"
+                                    color="secondary"
+                                    onClick={()=>setOpen(false)}
+                            >
+                                Cancel
+                            </Button>
+                        </div>
+                    </form>
+                </Container>
+            </Modal>
+        </>
     );
 };
 
