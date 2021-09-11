@@ -12,6 +12,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
 import FormLabel from "@material-ui/core/FormLabel";
 import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from '@material-ui/lab/Alert';
 
 
 const useStyles = makeStyles(theme => ({
@@ -32,29 +34,42 @@ const useStyles = makeStyles(theme => ({
         margin: "auto",
         [theme.breakpoints.down("sm")]: {
             width: "100vw",
-            height:  "100vh",
+            height: "100vh",
         },
     },
     form: {
-      padding: theme.spacing(2),
+        padding: theme.spacing(2),
     },
     item: {
-      marginBottom: theme.spacing(3),
+        marginBottom: theme.spacing(3),
     },
 }));
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const Add = () => {
     const classes = useStyles();
-    const [open,setOpen] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [openAlert, setOpenAlert] = useState(false);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenAlert(false);
+    };
 
     return (
-        <>
+        <div>
             <Tooltip title="Add"
                      aria-label="add"
                      onClick={() => setOpen(true)}
             >
                 <Fab color="primary" className={classes.fab}>
-                    <AddIcon />
+                    <AddIcon/>
                 </Fab>
             </Tooltip>
             <Modal open={open}>
@@ -65,7 +80,7 @@ const Add = () => {
                                 id="standart-basic"
                                 label="Title"
                                 size="small"
-                                style={{width:"100%"}}
+                                style={{width: "100%"}}
                             />
                             <TextField
                                 id="outlined-multiline-static"
@@ -75,12 +90,12 @@ const Add = () => {
                                 variant="outlined"
                                 label="Description"
                                 size="small"
-                                style={{width:"100%"}}
+                                style={{width: "100%"}}
                             />
                         </div>
                         <div className={classes.item}>
                             <TextField select label="Visibility" value="Public">
-                                <MenuItem  value="Public">
+                                <MenuItem value="Public">
                                     Public
                                 </MenuItem>
                                 <MenuItem value="Private">
@@ -93,23 +108,26 @@ const Add = () => {
                         </div>
                         <div className={classes.item}>
                             <FormLabel component="legend">Who can comment?</FormLabel>
-                            <RadioGroup >
-                                <FormControlLabel value="Everybody" control={<Radio size="small"/>} label="Everybody" />
-                                <FormControlLabel value="My friends" control={<Radio size="small"/>} label="My friends" />
-                                <FormControlLabel value="Nobody" control={<Radio size="small"/>} label="Nobody" />
-                                <FormControlLabel value="Custom" disabled control={<Radio size="small" />} label="Custom(Premium)" />
-                            </RadioGroup >
+                            <RadioGroup>
+                                <FormControlLabel value="Everybody" control={<Radio size="small"/>} label="Everybody"/>
+                                <FormControlLabel value="My friends" control={<Radio size="small"/>}
+                                                  label="My friends"/>
+                                <FormControlLabel value="Nobody" control={<Radio size="small"/>} label="Nobody"/>
+                                <FormControlLabel value="Custom" disabled control={<Radio size="small"/>}
+                                                  label="Custom(Premium)"/>
+                            </RadioGroup>
                         </div>
                         <div className={classes.item}>
                             <Button variant="outlined"
                                     color="primary"
-                                    style={{marginRight:"20px"}}
+                                    style={{marginRight: "20px"}}
+                                    onClick={() => setOpenAlert(true)}
                             >
                                 Create
                             </Button>
                             <Button variant="outlined"
                                     color="secondary"
-                                    onClick={()=>setOpen(false)}
+                                    onClick={() => setOpen(false)}
                             >
                                 Cancel
                             </Button>
@@ -117,7 +135,18 @@ const Add = () => {
                     </form>
                 </Container>
             </Modal>
-        </>
+            <Snackbar open={openAlert}
+                      autoHideDuration={3000}
+                      onClose={handleClose}
+                      anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'left'
+                      }}>
+                <Alert onClose={handleClose} severity="success">
+                    This is a success message!
+                </Alert>
+            </Snackbar>
+        </div>
     );
 };
 
